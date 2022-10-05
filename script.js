@@ -6,6 +6,7 @@ const filterName = document.querySelector('.slider .slider-info .name')
 const filterValue = document.querySelector('.slider .slider-info .value')
 const sliderInput = document.querySelector('.slider input')
 const transformOptions = document.querySelectorAll('.rotate .options .button')
+const resetBtn = document.querySelector('.button.reset')
 
 const loadImage = (evt) => {
   const file = evt.target.files[0]
@@ -103,3 +104,12 @@ const updateTransform = (option) => {
 transformOptions.forEach((option) => {
   option.addEventListener('click', () => updateTransform(option))
 })
+
+const reset = () => {
+  currentFilter = { ... DEFALTFILTER }
+  currentTransform = {... DEFAULTTRANSFORM}
+  applyChange()
+  filterOptions[0].click()
+}
+
+resetBtn.addEventListener('click', reset)
