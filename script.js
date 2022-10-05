@@ -5,6 +5,7 @@ const filterOptions = document.querySelectorAll('.filter .options .button')
 const filterName = document.querySelector('.slider .slider-info .name')
 const filterValue = document.querySelector('.slider .slider-info .value')
 const sliderInput = document.querySelector('.slider input')
+const transformOptions = document.querySelectorAll('.rotate .options .button')
 
 const loadImage = (evt) => {
   const file = evt.target.files[0]
@@ -25,11 +26,24 @@ const DEFALTFILTER = {
   grayscale: 0
 }
 
+const DEFAULTTRANSFORM = {
+  rotate: 0,
+  flipX: 1,
+  flipY: 1
+}
+
 let currentFilter = {
   brightness: 100,
   saturation: 100,
   inversion: 0,
   grayscale: 0
+}
+
+
+let currentTransform = {
+  rotate: 0,
+  flipX: 1,
+  flipY: 1
 }
 
 const sliderMax = {
@@ -45,6 +59,10 @@ const applyChange = () => {
     saturate(${currentFilter.saturation}%)
     invert(${currentFilter.inversion}%)
     grayscale(${currentFilter.grayscale}%)
+  `
+  previewImg.style.transform = `
+    rotate(${currentTransform.rotate}deg)
+    scale(${currentTransform.flipX}, ${currentTransform.flipY})
   `
 }
 
@@ -69,3 +87,19 @@ filterOptions.forEach(option => {
   option.addEventListener('click', () => setCurrentFilter(option))
 })
 sliderInput.addEventListener('input', updateFilter)
+
+// transform
+const updateTransform = (option) => {
+  if (option.id === 'left' || option.id === 'right') {
+    option.id === 'left' ? currentTransform.rotate -= 90 : currentTransform.rotate += 90
+  } else if (option.id === 'horizontal') {
+    currentTransform.flipX = currentTransform.flipX === 1 ? -1 : 1
+  } else {
+    currentTransform.flipY = currentTransform.flipY === 1 ? -1 : 1
+  }
+  applyChange()
+}
+
+transformOptions.forEach((option) => {
+  option.addEventListener('click', () => updateTransform(option))
+})
