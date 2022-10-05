@@ -15,6 +15,7 @@ const loadImage = (evt) => {
   previewImg.src = URL.createObjectURL(file)
   previewImg.addEventListener('load', () => {
     document.querySelector('.container').classList.remove('disabled')
+    resetBtn.click()
   })
 }
 
