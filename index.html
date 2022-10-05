@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Image Editor in JavaScript</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
+</head>
+<body>
+  <div class="container disabled">
+    <h1>Image Editor</h1>
+    <div class="wrapper">
+      <div class="editor-panel">
+        <div class="filter">
+          <p class="title">Filters</p>
+          <div class="options">
+            <button id="brightness" class="button">Brightness</button>
+            <button id="saturation" class="button">Saturation</button>
+            <button id="inversion" class="button">Inversion</button>
+            <button id="grayscale" class="button">Grayscale</button>
+          </div>
+          <div class="slider">
+            <div class="slider-info">
+              <p class="name">Brightness</p>
+              <p class="value">100%</p>
+            </div>
+            <input type="range" min="0" max="200">
+          </div>
+        </div>
+        <div class="rotate">
+          <p class="title">Rotate & Flip</p>
+          <div class="options">
+            <button class="button" id="left">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            <button class="button" id="right">
+              <i class="fa-solid fa-rotate-right"></i>
+            </button>
+            <button class="button" id="horizontal">
+              <i class='bx bx-reflect-vertical'></i>
+            </button>
+            <button class="button" id="vertical">
+              <i class='bx bx-reflect-horizontal' ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="image-preview">
+        <img src="image-placeholder.svg" alt="preview-image">
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="button__left">
+        <button class="button reset">RESET FILTERS</button>
+      </div>
+      <div class="button__right">
+        <button class="button is-gray choose-image">CHOOSE IMAGE</button>
+        <button class="button is-primary save">SAVE IMAGE</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
