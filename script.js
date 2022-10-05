@@ -8,18 +8,19 @@ const sliderInput = document.querySelector('.slider input')
 const transformOptions = document.querySelectorAll('.rotate .options .button')
 const resetBtn = document.querySelector('.button.reset')
 const saveBtn = document.querySelector('.button.save')
+const previewImgZone = document.querySelector('.image-preview')
 
-const loadImage = (evt) => {
-  const file = evt.target.files[0]
+const loadImage = (file) => {
   if (!file) return
   previewImg.src = URL.createObjectURL(file)
   previewImg.addEventListener('load', () => {
     document.querySelector('.container').classList.remove('disabled')
+    previewImgZone.classList.remove('drag-active')
     resetBtn.click()
   })
 }
 
-fileInput.addEventListener('change', loadImage)
+fileInput.addEventListener('change', (evt) => loadImage(evt.target.files[0]))
 chooseImgBtn.addEventListener('click', () => fileInput.click())
 
 const DEFALTFILTER = {
@@ -150,3 +151,26 @@ const save = () => {
 }
 
 saveBtn.addEventListener('click', save)
+
+const toggleActive = () => {
+  previewImgZone.classList.toggle('drag-active')
+}
+
+previewImgZone.addEventListener('dragenter', (evt) => {
+  toggleActive()
+})
+
+previewImgZone.addEventListener('dragleave', (evt) => {
+  toggleActive()
+})
+
+// in the dragover event handler for the target container, we call event.preventDefault(), which enables it to receive drop events.
+previewImgZone.addEventListener("dragover", (evt) => {
+  evt.preventDefault();
+});
+
+previewImgZone.addEventListener('drop', (evt) => {
+  // prevent default action (open as link for some elements)
+  evt.preventDefault()
+  loadImage(evt.dataTransfer.files[0])
+})
