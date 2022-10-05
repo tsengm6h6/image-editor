@@ -1,14 +1,14 @@
 const fileInput = document.querySelector('.file-input')
-const chooseImgBtn = document.querySelector('.choose-image')
 const previewImg = document.querySelector('.image-preview img')
+const previewImgZone = document.querySelector('.image-preview')
 const filterOptions = document.querySelectorAll('.filter .options .button')
 const filterName = document.querySelector('.slider .slider-info .name')
 const filterValue = document.querySelector('.slider .slider-info .value')
 const sliderInput = document.querySelector('.slider input')
 const transformOptions = document.querySelectorAll('.rotate .options .button')
 const resetBtn = document.querySelector('.button.reset')
+const chooseImgBtn = document.querySelector('.choose-image')
 const saveBtn = document.querySelector('.button.save')
-const previewImgZone = document.querySelector('.image-preview')
 
 const loadImage = (file) => {
   if (!file) return
@@ -125,20 +125,17 @@ const save = () => {
   saveBtn.innerText = 'SAVING IMAGE...'
   saveBtn.classList.add('disabled')
   const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d') // 取得繪製環境
-  canvas.width = previewImg.naturalWidth // set canvas width to actual image width
-  canvas.height = previewImg.naturalHeight // set canvas height to actual image height
-  // drawImage(image, x, y, width, height)
+  const ctx = canvas.getContext('2d')
+  canvas.width = previewImg.naturalWidth
+  canvas.height = previewImg.naturalHeight
   ctx.filter = getFilter()
-  // 處理 transform
   const { rotate, flipX, flipY } = currentTransform
-  ctx.translate(canvas.width / 2, canvas.height /2) // 找到圖片中心點
-  // 先 rotate 再 scale，否則旋轉角度會不正確
+  ctx.translate(canvas.width / 2, canvas.height /2)
   if (rotate !== 0) {
     ctx.rotate(rotate * Math.PI / 180)
   }
-  ctx.scale(flipX, flipY) // 縮放值若是負數，會造成座標軸鏡射 -> 笛卡爾座標系
-  ctx.drawImage(previewImg, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height) // 拉回左上角（=對齊中心點，鏡射才不會跑掉）
+  ctx.scale(flipX, flipY)
+  ctx.drawImage(previewImg, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height)
   
   const link = document.createElement('a')
   link.download = 'image.jpg'
@@ -164,13 +161,11 @@ previewImgZone.addEventListener('dragleave', (evt) => {
   toggleActive()
 })
 
-// in the dragover event handler for the target container, we call event.preventDefault(), which enables it to receive drop events.
 previewImgZone.addEventListener("dragover", (evt) => {
   evt.preventDefault();
 });
 
 previewImgZone.addEventListener('drop', (evt) => {
-  // prevent default action (open as link for some elements)
   evt.preventDefault()
   loadImage(evt.dataTransfer.files[0])
 })
